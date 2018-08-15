@@ -7,33 +7,52 @@ Requests, Heroku, and Bokeh for visualization.
 The repository contains a basic template for a Flask configuration that will
 work on Heroku.
 
-A [finished example](https://lemurian.herokuapp.com) that demonstrates some basic functionality.
+A [finished example](https://stock30day.herokuapp.com/) that demonstrates some basic functionality.
 
 ## Step 1: Setup and deploy
-- Git clone the existing template repository.
+
+- Git clone [the existing template repository](https://github.com/thedataincubator/flask-framework).
 - `Procfile`, `requirements.txt`, `conda-requirements.txt`, and `runtime.txt`
   contain some default settings.
 - There is some boilerplate HTML in `templates/`
 - Create Heroku application with `heroku create <app_name>` or leave blank to
   auto-generate a name.
-- (Suggested) Use the [conda buildpack](https://github.com/thedataincubator/conda-buildpack).
-  If you choose not to, put all requirements into `requirements.txt`
+- I put all requirements into `requirements.txt` .
+- I use API Key  to access data from Quandl. To hide API key from Github push, I use Heroku CLI to set up the enviromental key:
 
-  `heroku config:add BUILDPACK_URL=https://github.com/thedataincubator/conda-buildpack.git#py3`
+  
 
-  The advantages of conda include easier virtual environment management and fast package installation from binaries (as compared to the compilation that pip-installed packages sometimes require).
-  One disadvantage is that binaries take up a lot of memory, and the slug pushed to Heroku is limited to 300 MB. Another note is that the conda buildpack is being deprecated in favor of a Docker solution (see [docker branch](https://github.com/thedataincubator/flask-framework/tree/docker) of this repo for an example).
+  In command line:
+
+  ```
+  cd my_app_root_folder
+  heroku config:set API_KEY = my_api_key_from_Quandl
+  ```
+
+  To call my api_key from my python app,
+
+  ```
+  import os
+  api_key = os.environ['API_KEY']
+  ```
+
+  
+
+  
 - Deploy to Heroku: `git push heroku master`
-- You should be able to see your site at `https://<app_name>.herokuapp.com`
-- A useful reference is the Heroku [quickstart guide](https://devcenter.heroku.com/articles/getting-started-with-python-o).
+- You should be able to see your site at `https://stock30day.herokuapp.com/`
+
+  
 
 ## Step 2: Get data from API and put it in pandas
+
 - Use the `requests` library to grab some data from a public API. This will
   often be in JSON format, in which case `simplejson` will be useful.
 - Build in some interactivity by having the user submit a form which determines which data is requested.
 - Create a `pandas` dataframe with the data.
 
 ## Step 3: Use Bokeh to plot pandas data
+
 - Create a Bokeh plot from the dataframe.
 - Consult the Bokeh [documentation](http://bokeh.pydata.org/en/latest/docs/user_guide/embed.html)
   and [examples](https://github.com/bokeh/bokeh/tree/master/examples/embed).
