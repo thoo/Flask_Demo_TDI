@@ -4,6 +4,7 @@ from bokeh.plotting import figure
 from bokeh.io import show,output_file
 from bokeh.palettes import Category10_4 as C4
 from bokeh.models import HoverTool
+import os
 from boto.s3.connection import S3Connection
 
 import quandl as ql

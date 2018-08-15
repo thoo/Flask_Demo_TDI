@@ -4,7 +4,7 @@ from bokeh.embed import components
 from bokeh.plotting import figure
 from bokeh.io import show,output_file
 from bokeh.palettes import Category10_4 as C4
-
+import os
 from bokeh.models import HoverTool
 from boto.s3.connection import S3Connection
 import quandl as ql
@@ -34,4 +34,4 @@ def myplot():
 	return render_template('myplot.html',script=script,div=div)
 
 if __name__ == '__main__':
-  app.run(port=33507,debug=False)
+  app.run(port=33507,debug=True)
