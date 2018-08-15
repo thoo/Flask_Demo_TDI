@@ -10,7 +10,7 @@ from boto.s3.connection import S3Connection
 import quandl as ql
 
 stock_dict={"AAPL":"APPLE Inc.","MSFT":"Microsoft Corp.","NKE":"Nike Inc.","INTC":"Intel Corp."}
-api_key = S3Connection(os.environ['API_KEY'])
+api_key = os.environ['API_KEY']
 def get_ql(stock='AAPL',api_key=api_key):
 	
 	mykey=api_key.rstrip()
