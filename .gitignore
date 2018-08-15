@@ -1,0 +1,4 @@
+venv
+*.pdf
+jupyter_notebook
+api_key.txt

@@ -1,4 +1,18 @@
 from flask import Flask, render_template, request, redirect
+import pandas as pd
+from bokeh.embed import components
+from bokeh.plotting import figure
+from bokeh.io import show,output_file
+from bokeh.palettes import Category10_4 as C4
+
+from bokeh.models import HoverTool
+
+import quandl as ql
+
+from functions import *
+
+stock_dict={"AAPL":"APPLE Inc.","MSFT":"Microsoft Corp.","NKE":"Nike Inc.","INTC":"Intel Corp."}
+
 
 app = Flask(__name__)
 
@@ -6,9 +20,18 @@ app = Flask(__name__)
 def index():
   return render_template('index.html')
 
-@app.route('/about')
-def about():
-  return render_template('about.html')
+@app.route('/myplot',methods=['POST'])
+
+def myplot():
+	web_input=request.form.getlist('price')
+	ticker=request.form['ticker']
+	print(web_input,ticker)
+	
+	plot=stock_plot(ticker,web_input)
+
+	script,div=components(plot)
+
+	return render_template('myplot.html',script=script,div=div)
 
 if __name__ == '__main__':
-  app.run(port=33507)
+  app.run(port=33507,debug=True)
