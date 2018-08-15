@@ -1,3 +1,5 @@
 venv
 *.pdf
 jupyter_notebook
+__pycache__
+api_key.txt
