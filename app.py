@@ -6,7 +6,7 @@ from bokeh.io import show,output_file
 from bokeh.palettes import Category10_4 as C4
 
 from bokeh.models import HoverTool
-
+from boto.s3.connection import S3Connection
 import quandl as ql
 
 from functions import *
