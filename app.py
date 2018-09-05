@@ -11,7 +11,7 @@ import quandl as ql
 
 from functions import *
 
-stock_dict={"AAPL":"APPLE Inc.","MSFT":"Microsoft Corp.","NKE":"Nike Inc.","INTC":"Intel Corp."}
+
 
 
 app = Flask(__name__)

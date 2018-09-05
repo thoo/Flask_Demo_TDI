@@ -9,14 +9,14 @@ from boto.s3.connection import S3Connection
 
 import quandl as ql
 
-stock_dict={"AAPL":"APPLE Inc.","MSFT":"Microsoft Corp.","NKE":"Nike Inc.","INTC":"Intel Corp."}
+#stock_dict={"AAPL":"APPLE Inc.","MSFT":"Microsoft Corp.","NKE":"Nike Inc.","INTC":"Intel Corp."}
 api_key = os.environ['API_KEY']
 def get_ql(stock='AAPL',api_key=api_key):
 	
 	mykey=api_key.rstrip()
 
 	ql.ApiConfig.api_key = mykey
-	data=ql.get('EOD/'+stock,rows=30)
+	data=ql.get('WIKI/'+stock,rows=30)
 	data.reset_index(inplace=True)
 	return data
 
@@ -45,6 +45,8 @@ def stock_plot(stock_ticker='AAPL',col_names=['Open','Close']):
 	
 
 	data=get_ql(stock_ticker)
+	data.rename(columns={'Adj. Open': 'Adj_Open', 'Adj. Close': 'Adj_Close'}, inplace=True)
+	column_dict={'Adj. Open': 'Adj_Open', 'Adj. Close': 'Adj_Close','Open':'Open','Close':'Close'}
 	#print(data.head())
 	p=figure(plot_width = 800,\
 			 plot_height = 600,\
@@ -58,7 +60,7 @@ def stock_plot(stock_ticker='AAPL',col_names=['Open','Close']):
 			'Adj_Close':C4[3]}
 
 
-	p.title.text= "{} : End-Of-Day Stock Price for Last 30-Business-Day".format(stock_dict[stock_ticker])
+	p.title.text= "{} : End-Of-Day Stock Price for Last 30-Business-Day".format(stock_ticker)
 
 	#legend
 	p.xaxis.axis_label = 'Time [Month/Day]'
@@ -69,6 +71,7 @@ def stock_plot(stock_ticker='AAPL',col_names=['Open','Close']):
 
 
 	for i in col_names:
+		i=column_dict[i]
 		line=p.line('Date',i, source = data, legend=":"+i,alpha = 0.9 , line_width = 3, line_color = color[i])
 		hov=hover(i,line)
 		p.add_tools(hov)
